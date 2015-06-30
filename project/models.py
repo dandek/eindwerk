@@ -1,8 +1,13 @@
+# project/models.py
+
+
+from project import db
+
 import datetime
-from views import db
 
 
 class Task(db.Model):
+
     __tablename__ = "tasks"
 
     task_id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +31,7 @@ class Task(db.Model):
 
 
 class User(db.Model):
+
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -40,7 +46,6 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.role = role
-
 
     def __repr__(self):
         return '<User {0}>'.format(self.name)

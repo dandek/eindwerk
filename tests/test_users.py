@@ -4,14 +4,15 @@
 import os
 import unittest
 
-from views import app, db
-from config import basedir
-from models import User
+from project import app, db
+from project.config import basedir
+from project.models import User
 
 TEST_DB = 'test.db'
 
 
 class UsersTests(unittest.TestCase):
+
     ############################
     #### setup and teardown ####
     ############################
@@ -21,7 +22,7 @@ class UsersTests(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-                                                os.path.join(basedir, TEST_DB)
+            os.path.join(basedir, TEST_DB)
         self.app = app.test_client()
         db.create_all()
 
@@ -29,6 +30,7 @@ class UsersTests(unittest.TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+
 
     ########################
     #### helper methods ####
@@ -61,6 +63,7 @@ class UsersTests(unittest.TestCase):
             posted_date='02/04/2015',
             status='1'
         ), follow_redirects=True)
+
 
     def test_users_can_register(self):
         new_user = User("michael", "michael@mherman.org", "michaelherman")
@@ -142,7 +145,7 @@ class UsersTests(unittest.TestCase):
         )
         self.assertIn(b'This field is required.', response.data)
 
-    def test_string_representation_of_the_user_object(self):
+    def test_string_reprsentation_of_the_user_object(self):
 
         db.session.add(
             User(
